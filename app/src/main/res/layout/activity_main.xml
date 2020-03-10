@@ -69,4 +69,10 @@
         android:layout_height="wrap_content"
         android:text="마스크 찾기" />
 
+    <Button
+        android:id="@+id/btn_jsontest"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="json 통신 테스트" />
+
 </LinearLayout>

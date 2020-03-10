@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
 
     private EditText edit_address, edit_setmeter;
     private Button btn_maskfind;
+    private Button btn_jsontest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         edit_address = findViewById(R.id.edit_address);
         edit_setmeter = findViewById(R.id.edit_setmeter);
         btn_maskfind = findViewById(R.id.btn_maskfind);
-
+        btn_jsontest = findViewById(R.id.btn_jsontest); // json 통신 테스트 버튼ㄹ
         final Geocoder geocoder = new Geocoder(this);
 
         btn_maskfind.setOnClickListener(new View.OnClickListener(){
@@ -43,14 +44,14 @@ public class MainActivity extends AppCompatActivity {
                     if (postAddress.equals("") || (postFindMeter >= 10000 || postFindMeter <= 0)) { // 잘못된 주소 null 또는 meter 값 입력 시 오류 로직
                         Toast.makeText(getApplicationContext(), "빈값을 입력하거나 잘못된 영역이 있습니다.", Toast.LENGTH_LONG).show();
                     } else { // 정상적 로직
-                        addressGeocoder(postAddress);
+                        addressGeocoder(postAddress, postFindMeter);
                         }
                     } catch (NumberFormatException e){ // 반경거리에 빈 값을 넣었을 경우
                         Toast.makeText(getApplicationContext(),"잘못된 값을 입력했습니다" , Toast.LENGTH_LONG).show();
                     }
                 }
 
-            private void addressGeocoder (String postAddress) {
+            private void addressGeocoder (String postAddress, int postFindMeter) {
                 List<Address> list = null;
 
                 try {
@@ -66,14 +67,25 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(),"해당 주소는 없습니다" , Toast.LENGTH_LONG).show();
                     } else {
                       Address addr = list.get(0);
+                      String address = addr.getAddressLine(0);
                       double lat = addr.getLatitude();
                       double lng = addr.getLongitude();
 
-                      String location = String.format("geo:%f, %f",lat,lng);
-                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(location));
-                        startActivity(intent);
+                      Intent mapIntent = new Intent(getApplicationContext(), MapActivity.class);
+                      mapIntent.putExtra("lat", lat);
+                      mapIntent.putExtra("lng", lng);
+                      mapIntent.putExtra("postAddress", address);
+                      mapIntent.putExtra("postFindMeter", postFindMeter);
+                      startActivity(mapIntent);
                     }
                 }
+            }
+        });  // 지도 확인
+        btn_jsontest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent jsonIntent = new Intent(getApplicationContext(),JsonTestActivity.class);
+                startActivity(jsonIntent);
             }
         });
     }
