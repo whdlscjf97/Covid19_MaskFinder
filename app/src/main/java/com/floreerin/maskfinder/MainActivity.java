@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText edit_address, edit_setmeter;
     private Button btn_maskfind;
     private Button btn_jsontest;
+    private Button btn_jsontest2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +31,9 @@ public class MainActivity extends AppCompatActivity {
         edit_address = findViewById(R.id.edit_address);
         edit_setmeter = findViewById(R.id.edit_setmeter);
         btn_maskfind = findViewById(R.id.btn_maskfind);
-        btn_jsontest = findViewById(R.id.btn_jsontest); // json 통신 테스트 버튼ㄹ
+        btn_jsontest = findViewById(R.id.btn_jsontest); // json 통신 테스트 버튼
+        btn_jsontest2 = findViewById(R.id.btn_jsontest2); // json 통신 테스트 2 버튼
+
         final Geocoder geocoder = new Geocoder(this);
 
         btn_maskfind.setOnClickListener(new View.OnClickListener(){
@@ -85,6 +88,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent jsonIntent = new Intent(getApplicationContext(),JsonTestActivity.class);
+                startActivity(jsonIntent);
+            }
+        });
+        btn_jsontest2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent jsonIntent = new Intent(getApplicationContext(),JsonGeoTestActivity.class);
                 startActivity(jsonIntent);
             }
         });

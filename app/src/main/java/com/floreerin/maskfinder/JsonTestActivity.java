@@ -22,10 +22,6 @@ import java.io.InputStreamReader;
 import java.lang.ref.WeakReference;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
 
 public class JsonTestActivity extends AppCompatActivity {
 
@@ -154,6 +150,9 @@ public class JsonTestActivity extends AppCompatActivity {
                 String lng = storeInfosListKey.getString("lng"); // 경도
                 String name = storeInfosListKey.getString("name"); // 약국 이름
                 String type = storeInfosListKey.getString("type"); // 업체 타입 (약국, 농협, 우체국 등 공적마스크 제공업체 타입)
+
+                System.out.println("약국 주소 : " + addr + "약국 코드 : " + code + "약국 위도 : " + lat +
+                                    "약국 경도 : " + lng + "약국 이름 : " + name + "업체 타입 : " + type );
             }
             return true;
         } catch (JSONException e){
